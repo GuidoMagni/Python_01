@@ -107,7 +107,7 @@ def main():
     plant1.bloom()
     plant1.show()
     print("\n=== Tree")
-    plant2 = Tree("Oak", 200.0, 365, 5.0, 100.0)
+    plant2 = Tree("Oak", 200.0, 365, 100.0, 5.0)
     plant2.show()
     print("[asking the oak to produce shade]")
     plant2.produce_shade()

@@ -2,6 +2,9 @@ class Plant:
     def __init__(self, name, height, age, growthrate):
         self._name = name
         self._grate = growthrate
+        self._grow = 0
+        self._aging = 0
+        self._show = 0
         if height < 0:
             print("Error, height can't be negative")
             print("Height initialization rejected")
@@ -17,12 +20,15 @@ class Plant:
 
     def show(self):
         print(f"{self._name}: {self._height}cm, {self._age} days old")
+        self._show += 1
 
     def grow(self):
         self._height = round(self._height + self._grate, 2)
+        self._grow += 1
 
     def aging(self):
         self._age += 1
+        self._aging += 1
 
     def get_name(self):
         return self._name
@@ -56,6 +62,11 @@ class Plant:
         else:
             return False
 
+    class Stats:
+        @staticmethod
+        def show_stats(Plant: "Plant"):
+            print(f"[statistics for {Plant._name}]")
+            print(f"Stats: {Plant._grow} grow, {Plant._aging} age, {Plant._show} show")
 
 class Flower(Plant):
     def __init__(self, name, height, age, growthrate, color):
@@ -79,6 +90,7 @@ class Tree(Plant):
     def __init__(self, name, height, age, growthrate, diameter):
         super().__init__(name, height, age, growthrate)
         self._diameter = diameter
+        self._shade = 0
 
     def show(self):
         super().show()
@@ -88,7 +100,12 @@ class Tree(Plant):
         a = self._name
         b = self._height
         c = self._diameter
+        self._shade += 1
         print(f"Tree {a} now produces a shade of {b}cm long and {c}cm wide.")
+
+    def show_stats(self):
+        super().Stats.show_stats(self)
+        print(f"{self._shade} shade")
 
 
 class Vegetable(Plant):
@@ -111,20 +128,22 @@ def main():
     print("Is 30 days more than a year? ->", Plant.check_year(30))
     print("Is 400 days more than a year? ->", Plant.check_year(400))
     print("\n=== Flower")
-    plant1 = Flower("Rose", 15.0, 10, 0.8, "red")
+    plant1 = Flower("Rose", 15.0, 10, 8.0, "red")
     plant1.show()
-    print("[statistics for Rose]")
-    plant1.show_stats()
+    plant1.Stats.show_stats(plant1)
     print("[asking the rose to grow and bloom]")
     plant1.grow()
     plant1.bloom()
     plant1.show()
+    plant1.Stats.show_stats(plant1)
     print("\n=== Tree")
-    plant2 = Tree("Oak", 200.0, 365, 5.0, 100.0)
+    plant2 = Tree("Oak", 200.0, 365, 100.0, 5.0)
     plant2.show()
+    plant2.show_stats()
     print("[asking the oak to produce shade]")
     plant2.produce_shade()
-    plant3 = Vegetable("Tomato", 5.0, 10, 2.1, "April", 0)
+    plant2.show_stats()
+    plant3 = Vegetable("Tomato", 5.0, 10, 2.1, "April", 0) # Seed
     print("\n=== Vegetable")
     plant3.show()
     print("[make tomato grow and age for 20 days]")
