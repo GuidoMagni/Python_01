@@ -1,6 +1,7 @@
 class Plant:
-    def __init__(self, name, height, age):
+    def __init__(self, name, height, age, growthrate):
         self._name = name
+        self._grate = growthrate
         if height < 0:
             print("Error, height can't be negative")
             print("Height initialization rejected")
@@ -21,7 +22,7 @@ class Plant:
         print(f"Plant created: {a}: {b}cm, {c} days old\n")
 
     def grow(self):
-        self._height = round(self._height + 0.8, 2)
+        self._height = round(self._height + self._grate, 2)
 
     def aging(self):
         self._age += 1
@@ -54,7 +55,7 @@ class Plant:
 
 def main():
     print("=== Garden Security System ===")
-    plant1 = Plant("Rose", 15.0, 10)
+    plant1 = Plant("Rose", 15.0, 10, 0.8)
     plant1.show()
     plant1.set_height(25.0)
     plant1.set_age(30)

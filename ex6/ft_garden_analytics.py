@@ -49,6 +49,13 @@ class Plant:
         self._age = new_age
         print(f"Age updated: {new_age} days\n")
 
+    @staticmethod
+    def check_year(age):
+        if age > 365:
+            return True
+        else:
+            return False
+
 
 class Flower(Plant):
     def __init__(self, name, height, age, growthrate, color):
@@ -100,10 +107,16 @@ class Vegetable(Plant):
 
 
 def main():
-    print("=== Garden Plant Types ===\n=== Flower")
+    print("=== Garden statistics ===\n=== Check year-old")
+    print("Is 30 days more than a year? ->", Plant.check_year(30))
+    print("Is 400 days more than a year? ->", Plant.check_year(400))
+    print("\n=== Flower")
     plant1 = Flower("Rose", 15.0, 10, 0.8, "red")
     plant1.show()
-    print("[asking the rose to bloom]")
+    print("[statistics for Rose]")
+    plant1.show_stats()
+    print("[asking the rose to grow and bloom]")
+    plant1.grow()
     plant1.bloom()
     plant1.show()
     print("\n=== Tree")
