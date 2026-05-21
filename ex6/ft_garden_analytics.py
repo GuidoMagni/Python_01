@@ -65,8 +65,16 @@ class Plant:
     class Stats:
         @staticmethod
         def show_stats(Plant: "Plant"):
+            a = Plant._grow
+            b = Plant._aging
+            c = Plant._show
             print(f"[statistics for {Plant._name}]")
-            print(f"Stats: {Plant._grow} grow, {Plant._aging} age, {Plant._show} show")
+            print(f"Stats: {a} grow, {b} age, {c} show")
+
+    @classmethod
+    def anonymous(self):
+        return Plant("Unknown plant", 0.0, 0, 0.0)
+
 
 class Flower(Plant):
     def __init__(self, name, height, age, growthrate, color):
@@ -123,6 +131,26 @@ class Vegetable(Plant):
         self._nvalue += 1
 
 
+class Seed(Flower):
+    def __init__(self, name, height, age, growthrate, color):
+        super().__init__(name, height, age, growthrate, color)
+        self._bloom = 0
+        self.seeds = 0
+
+    def aging(self):
+        self._age += 20
+        self._aging += 1
+
+    def bloom(self):
+        super().bloom()
+        if self._bloom == 1:
+            self.seeds = 42
+
+    def show(self):
+        super().show()
+        print(f" Seeds: {self.seeds}")
+
+
 def main():
     print("=== Garden statistics ===\n=== Check year-old")
     print("Is 30 days more than a year? ->", Plant.check_year(30))
@@ -143,17 +171,19 @@ def main():
     print("[asking the oak to produce shade]")
     plant2.produce_shade()
     plant2.show_stats()
-    plant3 = Vegetable("Tomato", 5.0, 10, 2.1, "April", 0) # Seed
-    print("\n=== Vegetable")
+    plant3 = Seed("Sunflower", 80.0, 45, 30, "yellow")
+    print("\n=== Seed")
     plant3.show()
-    print("[make tomato grow and age for 20 days]")
-    i = 0
-    while i < 20:
-        plant3.grow()
-        plant3.aging()
-        plant3.nvalue_increase()
-        i += 1
+    print("[make sunflower grow, age and bloom]")
+    plant3.grow()
+    plant3.aging()
+    plant3.bloom()
     plant3.show()
+    plant3.Stats.show_stats(plant3)
+    print("\n=== Anonymous")
+    plant4 = Plant.anonymous()
+    plant4.show()
+    plant4.Stats.show_stats(plant4)
 
 
 if __name__ == "__main__":
